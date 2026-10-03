@@ -116,3 +116,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 // clang-format on
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    uint8_t r = 0, g = 0, b = 0;
+    switch (get_highest_layer(layer_state)) {
+        case LAYER_LOWER:   g = 255; break;
+        case LAYER_RAISE:   r = 255; g = 200; break;
+        case LAYER_POINTER: r = 255; break;
+        default: return true;
+    }
+    for (uint8_t i = led_min; i < led_max; i++) {
+        rgb_matrix_set_color(i, r, g, b);
+    }
+    return true;
+}
